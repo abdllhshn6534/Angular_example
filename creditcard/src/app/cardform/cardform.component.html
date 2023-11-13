@@ -1,0 +1,29 @@
+<form [formGroup]="cardForm">
+  <div class="field">
+    <label class="label">Ad Soyad</label>
+    <div class="control">
+      <input [ngClass]="{'is-danger': showErrors('name')}"
+             class="input" type="text" formControlName="name">
+
+    </div>
+  </div>
+  <ng-container
+    *ngIf="showErrors('name')"
+  >
+    <div class="help is-danger" *ngIf="cardForm.get('name')?.errors?.['required']">
+      *Zorunlu Alan
+    </div>
+    <div class="help is-danger"  *ngIf="cardForm.get('name')?.errors?.['minlength']">
+      Girdiğiniz değer
+      {{cardForm.get('name')?.errors?.['minlength']?.['actualLength']}}
+      karakter içermektedir, fakat minumum
+      {{cardForm.get('name')?.errors?.['minlength']?.['requiredLength']}}
+      karakter olmalıdır
+    </div>
+  </ng-container>
+
+</form>
+
+<div>Form içeriği: {{cardForm.value | json}}</div>
+<div>Form valid mi: {{cardForm.valid ? "evet" : "hayır"}}</div>
+<div>Form hataları: {{ cardForm.get('name')?.errors | json}}</div>
